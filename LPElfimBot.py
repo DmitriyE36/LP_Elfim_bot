@@ -5,6 +5,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import Settings
 
 logging.basicConfig(level=logging.INFO)
+logger = structlog.getLogger()
 
 def greet_user(update, context):
     print('Вызван /start')
@@ -16,16 +17,15 @@ def talk_to_me(update, context):
     update.message.reply_text(text)
 
 def main():
-    LP_Elfim_Bot = Updater(Settings.API_KEY, use_context=True)
+    lp_elfim_bot = Updater(Settings.API_KEY, use_context=True)
 
-    dp = LP_Elfim_Bot.dispatcher
+    dp = lp_elfim_bot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
 
-    logger = structlog.getLogger()
     logger.info("Бот стартовал")
-    LP_Elfim_Bot.start_polling()
-    LP_Elfim_Bot.idle()
+    lp_elfim_bot.start_polling()
+    lp_elfim_bot.idle()
 
 if __name__ == "__main__":
     main()
